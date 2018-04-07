@@ -58,7 +58,7 @@ End of training, validation accuracy: 0.825293, validation loss: 49.6842
 The CNN is about 424,1 Mo, it is a result of (round) 2h20 minute of computation with the GPU. 
 At the end, the neural network comes up with a validation accuracy of 82%.
 
-Here some plot about the validation accuracy and validation loss :
+Here some plot about the validation accuracy and training loss :
 ![alt text](https://github.com/mbenhamd/twitter-sentiment-cnn/blob/master/validation-accuracy.png "Validation Accuracy")
 ![alt text](https://github.com/mbenhamd/twitter-sentiment-cnn/blob/master/training-loss.png "Training Loss")
 
