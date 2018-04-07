@@ -1,6 +1,70 @@
-# Twitter sentiment classification by Daniele Grattarola
-This is a TensorFlow implementation of a convolutional neural
-network (CNN) to perform sentiment classification on tweets.
+# TensorFlow implementation of a convolutional neural network (CNN).
+## Part of the Twtter Sentiment Analaysis Project
+Link of the publication : [here](https://github.com/mbenhamd/database-publication-latex/blob/master/publication.pdf)
+
+We used those settings for training the CNN :
+```
+Flags:
+	batch_size = 128
+	checkpoint_freq = 1
+	custom_input = 
+	dataset_fraction = 1.0
+	device = gpu
+	embedding_size = 128
+	epochs = 10
+	evaluate_batch = False
+	filter_sizes = 3,4,5
+	load = None
+	num_filters = 128
+	save = True
+	save_protobuf = False
+	test_data_ratio = 0.1
+	train = True
+	valid_freq = 1
+
+Dataset:
+	Train set size = 1420766
+	Test set size = 157862
+	Vocabulary size = 274562
+	Input layer size = 117
+	Number of classes = 2
+```
+On a GTX 1060 (1280 cuda cores), we did 110 990 iterations (10 epochs) : 
+
+```
+Step 11099 of 110990 (epoch 1), validation accuracy: 0.770467, validation loss: 61.3758
+Saving checkpoint...
+Step 22198 of 110990 (epoch 2), validation accuracy: 0.79854, validation loss: 55.6074
+Saving checkpoint...
+Step 33297 of 110990 (epoch 3), validation accuracy: 0.80864, validation loss: 53.4248
+Saving checkpoint...
+Step 44396 of 110990 (epoch 4), validation accuracy: 0.814606, validation loss: 52.1589
+Saving checkpoint...
+Step 55495 of 110990 (epoch 5), validation accuracy: 0.81792, validation loss: 51.3007
+Saving checkpoint...
+Step 66594 of 110990 (epoch 6), validation accuracy: 0.820338, validation loss: 50.7547
+Saving checkpoint...
+Step 77693 of 110990 (epoch 7), validation accuracy: 0.821946, validation loss: 50.318
+Saving checkpoint...
+Step 88792 of 110990 (epoch 8), validation accuracy: 0.823447, validation loss: 50.049
+Saving checkpoint...
+Step 99891 of 110990 (epoch 9), validation accuracy: 0.823153, validation loss: 49.945
+Saving checkpoint...
+Step 110990 of 110990 (epoch 10), validation accuracy: 0.825287, validation loss: 49.6865
+Saving checkpoint...
+End of training, validation accuracy: 0.825293, validation loss: 49.6842
+```
+
+The CNN is about 424,1 Mo, it is a result of (round) 2h20 minute of computation with the GPU. 
+At the end, the neural network comes up with a validation accuracy of 82%.
+
+Here some plot about the validation accuracy and validation loss :
+![alt text](https://github.com/mbenhamd/twitter-sentiment-cnn/blob/master/validation-accuracy.png "Validation Accuracy")
+![alt text](https://github.com/mbenhamd/twitter-sentiment-cnn/blob/master/training-loss.png "Training Loss")
+
+
+## It is based on a previous work of Daniele Grattarola
+### Description
 
 This code is meant to have an educational value, to train the model by
 yourself and play with different configurations, and was not developed
@@ -15,7 +79,7 @@ you have any problems).
 **NOTE: this script is for Python 2.7 only**
 
 
-## Setup
+### Setup
 You'll need Tensorflow >=1.1.0 and its dependecies installed in order
 for the script to work (see [here](https://www.tensorflow.org/)).
 
@@ -46,7 +110,7 @@ mkdir output
 ```
 Now everything is set up and you're ready to start training the model.
 
-## Usage
+### Usage
 The simplest way to run the script is:
 ```sh
 $ python twitter-sentiment-cnn.py
@@ -102,7 +166,7 @@ The parameters are:
 - `device`: device to use for running the model (can be either 'cpu' or
     'gpu').
 
-## Pre-trained model
+### Pre-trained model
 User [@Horkyze](https://github.com/Horkyze) kindly trained the model
 for three epochs on the full dataset and shared the summary folder for
 quick deploy.
@@ -179,7 +243,7 @@ loss of 53.3314.
 I sincerely thank [@Horkyze](https://github.com/Horkyze) for providing
 the computational power and sharing the model with me.
 
-## Model description
+### Model description
 The network implemented in this script is a single layer CNN structured
 as follows:
 - **Embedding layer**: takes as input the tweets (as strings) and maps
