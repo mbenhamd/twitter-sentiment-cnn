@@ -62,8 +62,8 @@ Inline-style:
 ![alt text](https://github.com/mbenhamd/twitter-sentiment-cnn/blob/master/training-loss.png "Training Loss")
 
 
-# It is based on a previous work by Daniele Grattarola
-## Description
+## It is based on a previous work of Daniele Grattarola
+### Description
 
 This code is meant to have an educational value, to train the model by
 yourself and play with different configurations, and was not developed
@@ -78,7 +78,7 @@ you have any problems).
 **NOTE: this script is for Python 2.7 only**
 
 
-## Setup
+### Setup
 You'll need Tensorflow >=1.1.0 and its dependecies installed in order
 for the script to work (see [here](https://www.tensorflow.org/)).
 
@@ -109,7 +109,7 @@ mkdir output
 ```
 Now everything is set up and you're ready to start training the model.
 
-## Usage
+### Usage
 The simplest way to run the script is:
 ```sh
 $ python twitter-sentiment-cnn.py
@@ -165,7 +165,7 @@ The parameters are:
 - `device`: device to use for running the model (can be either 'cpu' or
     'gpu').
 
-## Pre-trained model
+### Pre-trained model
 User [@Horkyze](https://github.com/Horkyze) kindly trained the model
 for three epochs on the full dataset and shared the summary folder for
 quick deploy.
@@ -242,7 +242,7 @@ loss of 53.3314.
 I sincerely thank [@Horkyze](https://github.com/Horkyze) for providing
 the computational power and sharing the model with me.
 
-## Model description
+### Model description
 The network implemented in this script is a single layer CNN structured
 as follows:
 - **Embedding layer**: takes as input the tweets (as strings) and maps
