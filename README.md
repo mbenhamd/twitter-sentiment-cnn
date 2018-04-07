@@ -1,5 +1,5 @@
 # TensorFlow implementation of a CNN.
-## Part of the Twtter Sentiment Analaysis Project
+## Part of the Twitter Sentiment Analaysis Project
 Link of the publication : [here](https://github.com/mbenhamd/database-publication-latex/blob/master/publication.pdf)
 
 We used those settings for training the CNN :
