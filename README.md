@@ -1,8 +1,9 @@
-#  TensorFlow implementation of a convolutional neural network (CNN) to perform sentiment classification on tweets.
+# TensorFlow implementation of a convolutional neural network (CNN).
 ## Part of the Twtter Sentiment Analaysis Project
 Link of the publication : [here](https://github.com/mbenhamd/database-publication-latex/blob/master/publication.pdf)
 
 We used those settings for training the CNN :
+```
 Flags:
 	batch_size = 128
 	checkpoint_freq = 1
@@ -27,8 +28,10 @@ Dataset:
 	Vocabulary size = 274562
 	Input layer size = 117
 	Number of classes = 2
+```
+On a GTX 1060 (1280 cuda cores), we did 110 990 iterations (10 epochs) : 
 
-After 110990 iterations, on a GTX 1060 (1280 cuda cores) :
+```
 Step 11099 of 110990 (epoch 1), validation accuracy: 0.770467, validation loss: 61.3758
 Saving checkpoint...
 Step 22198 of 110990 (epoch 2), validation accuracy: 0.79854, validation loss: 55.6074
@@ -50,6 +53,7 @@ Saving checkpoint...
 Step 110990 of 110990 (epoch 10), validation accuracy: 0.825287, validation loss: 49.6865
 Saving checkpoint...
 End of training, validation accuracy: 0.825293, validation loss: 49.6842
+```
 
 The CNN is about 424,1 Mo about it is a result of (round) 2h20 minute of computation with the GPU. 
 At the end, the neural network comes up with a validation accuracy of 82%.
