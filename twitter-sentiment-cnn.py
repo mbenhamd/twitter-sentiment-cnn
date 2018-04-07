@@ -11,7 +11,7 @@ from tqdm import tqdm
 def log(*string, **kwargs):
     output = ' '.join(string)
     if kwargs.pop('verbose', True):
-        print output
+        print(output)
     LOG_FILE.write(''.join(['\n', output]))
 
 
@@ -84,6 +84,7 @@ def evaluate_sentence(sentence, vocabulary):
     log('Custom input evaluation:', network_sentiment)
     log('Actual output:', str(unnorm_result[0]))
 
+
 # Hyperparameters
 tf.flags.DEFINE_boolean('train', False,
                         'Train the network (default: False)')
@@ -133,10 +134,9 @@ if FLAGS.load is not None:
     CHECKPOINT_FILE_PATH = os.path.abspath(os.path.join(FLAGS.load, 'ckpt.ckpt'))
 else:
     CHECKPOINT_FILE_PATH = os.path.abspath(os.path.join(RUN_DIR, 'ckpt.ckpt'))
-os.mkdir(RUN_DIR)
+os.makedirs(RUN_DIR)
 SUMMARY_DIR = os.path.join(RUN_DIR, 'summaries')
-LOG_FILE = open(LOG_FILE_PATH, 'a', 0)
-
+LOG_FILE = open(LOG_FILE_PATH, 'w+')
 
 log('======================= START! ========================')
 # Load data
@@ -170,7 +170,7 @@ else:
 
 # Log run data
 log('\nFlags:')
-for attr, value in sorted(FLAGS.__flags.iteritems()):
+for attr, value in sorted(FLAGS.__flags.items()):
     log('\t%s = %s' % (attr, value._value))
 log('\nDataset:')
 log('\tTrain set size = %d\n'
@@ -234,7 +234,7 @@ with tf.device(device):
         pooled_outputs.append(pooled)
 
     # Combine the pooled feature tensors
-    num_filters_total = FLAGS.num_filters * len(filter_sizes)
+    num_filters_total = FLAGS.num_filters * len(list(filter_sizes))
     h_pool = tf.concat(pooled_outputs, 3)
     h_pool_flat = tf.reshape(h_pool, [-1, num_filters_total])
 
@@ -290,7 +290,7 @@ if FLAGS.train:
     # Batches
     batches = batch_iter(zip(x_train, y_train), FLAGS.batch_size, FLAGS.epochs)
     test_batches = list(batch_iter(zip(x_test, y_test), FLAGS.batch_size, 1))
-    my_batch = batches.next()  # To use with human_readable_output()
+    my_batch = next(batches)  # To use with human_readable_output()
 
     # Pretty-printing variables
     global_step = 0

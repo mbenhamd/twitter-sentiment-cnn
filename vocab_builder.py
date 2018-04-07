@@ -23,14 +23,14 @@ def build_vocab(sentences):
 
 
 # Load and preprocess data
-print 'vocab_builder: loading...'
+print('vocab_builder: loading...')
 sentences, labels = load_data_and_labels(1)  # 1 is passed so that load_data_and_labels() will parse the whole dataset
-print 'vocab_builder: padding...'
+print('vocab_builder: padding...')
 sentences_padded = pad_sentences(sentences)
-print 'vocab_builder: building vocabularies...'
+print('vocab_builder: building vocabularies...')
 vocabulary, vocabulary_inv = build_vocab(sentences_padded)
 
-print 'vocab_builder: writing csv...'
+print('vocab_builder: writing csv...')
 voc = csv.writer(open('twitter-sentiment-dataset/vocab.csv', 'w'))
 voc_inv = csv.writer(open('twitter-sentiment-dataset/vocab_inv.csv', 'w'))
 

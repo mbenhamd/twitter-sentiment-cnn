@@ -27,7 +27,7 @@ try:
     pos_dataset = open("twitter-sentiment-dataset/tw-data.pos", "w")
     neg_dataset = open("twitter-sentiment-dataset/tw-data.neg", "w")
 except IOError:
-    print "Failed to open file"
+    print("Failed to open file")
     quit()
 
 csv_lines = full_dataset.readlines()

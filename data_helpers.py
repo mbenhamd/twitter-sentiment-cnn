@@ -6,7 +6,7 @@ POS_DATASET_PATH = 'twitter-sentiment-dataset/tw-data.pos'
 NEG_DATASET_PATH = 'twitter-sentiment-dataset/tw-data.neg'
 VOC_PATH = 'twitter-sentiment-dataset/vocab.csv'
 VOC_INV_PATH = 'twitter-sentiment-dataset/vocab_inv.csv'
-
+ALL_PATH = '../final_txt.json'
 
 def clean_str(string):
     """
@@ -14,7 +14,7 @@ def clean_str(string):
     Returns the clean string.
     """
     string = re.sub(r"[^A-Za-z0-9(),!?\'\`]", " ", string)
-    string = re.sub(r'(.)\1+', r'\1\1', string) 
+    string = re.sub(r'(.)\1+', r'\1\1', string)
     string = re.sub(r"\'s", " \'s", string)
     string = re.sub(r"\'ve", " \'ve", string)
     string = re.sub(r"n\'t", " n\'t", string)
@@ -43,33 +43,33 @@ def load_data_and_labels(dataset_fraction):
     strings and one of labels.
     Returns the lists. 
     """
-    print "\tdata_helpers: loading positive examples..."
+    print("\tdata_helpers: loading positive examples...")
     positive_examples = list(open(POS_DATASET_PATH).readlines())
     positive_examples = [s.strip() for s in positive_examples]
-    print "\tdata_helpers: [OK]"
-    print "\tdata_helpers: loading negative examples..."
+    print("\tdata_helpers: [OK]")
+    print("\tdata_helpers: loading negative examples...")
     negative_examples = list(open(NEG_DATASET_PATH).readlines())
     negative_examples = [s.strip() for s in negative_examples]
-    print "\tdata_helpers: [OK]"
+    print("\tdata_helpers: [OK]")
 
     positive_examples = sample_list(positive_examples, dataset_fraction)
     negative_examples = sample_list(negative_examples, dataset_fraction)
 
     # Split by words
     x_text = positive_examples + negative_examples
-    print "\tdata_helpers: cleaning strings..."
+    print("\tdata_helpers: cleaning strings...")
     x_text = [clean_str(sent) for sent in x_text]
     x_text = [s.split(" ") for s in x_text]
-    print "\tdata_helpers: [OK]"
+    print("\tdata_helpers: [OK]")
 
     # Generate labels
-    print "\tdata_helpers: generating labels..."
+    print("\tdata_helpers: generating labels...")
     positive_labels = [[0, 1] for _ in positive_examples]
     negative_labels = [[1, 0] for _ in negative_examples]
-    print "\tdata_helpers: [OK]"
-    print "\tdata_helpers: concatenating labels..."
+    print("\tdata_helpers: [OK]")
+    print("\tdata_helpers: concatenating labels...")
     y = np.concatenate([positive_labels, negative_labels], 0)
-    print "\tdata_helpers: [OK]"
+    print("\tdata_helpers: [OK]")
     return [x_text, y]
 
 
@@ -124,6 +124,9 @@ def build_input_data(sentences, labels, vocabulary):
     Maps sentencs and labels to vectors based on a vocabulary.
     Returns the mapped lists. 
     """
+    # for sentence in sentences:
+    #    for word in sentence:
+    #        x = np.append(x, vocabulary[word])
     x = np.array([[vocabulary[word] for word in sentence]
                   for sentence in sentences])
     y = np.array(labels)
@@ -142,13 +145,10 @@ def string_to_int(sentence, vocabulary, max_len):
     x_text = [clean_str(sent) for sent in x_text]
     x_text = [s.split(" ") for s in x_text]
     padded_x_text = pad_sentences_to(x_text, max_len)
-    try: 
-        x = np.array([[vocabulary[word] for word in sentence]
+    x = np.array([[vocabulary[word] for word in sentence]
                       for sentence in padded_x_text])
-        return x
-    except KeyError, e:
-        print "The following word is unknown to the network: %s" % str(e)
-        quit()
+    return x
+
 
 
 def load_data(dataset_fraction):
@@ -158,15 +158,15 @@ def load_data(dataset_fraction):
     """
     # Load and preprocess data
     sentences, labels = load_data_and_labels(dataset_fraction)
-    print "\tdata_helpers: padding strings..."
+    print("\tdata_helpers: padding strings...")
     sentences_padded = pad_sentences(sentences)
-    print "\tdata_helpers: [OK]"
-    print "\tdata_helpers: building vocabulary..."
+    print("\tdata_helpers: [OK]")
+    print("\tdata_helpers: building vocabulary...")
     vocabulary, vocabulary_inv = build_vocab()
-    print "\tdata_helpers: [OK]"
-    print "\tdata_helpers: building processed datasets..."
+    print("\tdata_helpers: [OK]")
+    print("\tdata_helpers: building processed datasets...")
     x, y = build_input_data(sentences_padded, labels, vocabulary)
-    print "\tdata_helpers: [OK]"
+    print("\tdata_helpers: [OK]")
     return [x, y, vocabulary, vocabulary_inv]
 
 
