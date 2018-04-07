@@ -1,4 +1,4 @@
-# TensorFlow implementation of a convolutional neural network (CNN).
+# TensorFlow implementation of a CNN.
 ## Part of the Twtter Sentiment Analaysis Project
 Link of the publication : [here](https://github.com/mbenhamd/database-publication-latex/blob/master/publication.pdf)
 
