@@ -204,8 +204,8 @@ with tf.device(device):
         embedded_chars = tf.nn.embedding_lookup(W, data_in)
 
     # LSTM LAYER
-    num_hidden = 1000
-    lstm_cell = tf.contrib.rnn.LSTMCell(num_hidden, state_is_tuple=True,)
+    num_hidden = 50
+    lstm_cell = tf.contrib.rnn.LSTMCell(num_hidden, state_is_tuple=True)
     # self.h_drop_exp = tf.expand_dims(self.h_drop,-1)
     lstm_out, lstm_state = tf.nn.dynamic_rnn(lstm_cell, embedded_chars, dtype=tf.float32)
 
