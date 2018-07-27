@@ -195,13 +195,21 @@ with tf.device(device):
     # Stores the loss of the model for each batch of the validation testing
     valid_losses = tf.placeholder(tf.float32)
 
+
     # Embedding layer
     with tf.name_scope('embedding'):
         W = tf.Variable(tf.random_uniform([vocab_size, FLAGS.embedding_size],
                                           -1.0, 1.0),
                         name='embedding_matrix')
         embedded_chars = tf.nn.embedding_lookup(W, data_in)
-        embedded_chars_expanded = tf.expand_dims(embedded_chars, -1)
+
+    # LSTM LAYER
+    num_hidden = 1000
+    lstm_cell = tf.contrib.rnn.LSTMCell(num_hidden, state_is_tuple=True,)
+    # self.h_drop_exp = tf.expand_dims(self.h_drop,-1)
+    lstm_out, lstm_state = tf.nn.dynamic_rnn(lstm_cell, embedded_chars, dtype=tf.float32)
+
+    lstm_out_expanded = tf.expand_dims(lstm_out, -1)
 
     # Convolution + SeLU + Pooling layer
     pooled_outputs = []
@@ -214,7 +222,7 @@ with tf.device(device):
                             FLAGS.num_filters]
             W = weight_variable(filter_shape, name='W_conv')
             b = bias_variable([FLAGS.num_filters], name='b_conv')
-            conv = tf.nn.conv2d(embedded_chars_expanded,
+            conv = tf.nn.conv2d(lstm_out_expanded,
                                 W,
                                 strides=[1, 1, 1, 1],
                                 padding='VALID',

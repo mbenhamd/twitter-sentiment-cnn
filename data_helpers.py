@@ -8,6 +8,7 @@ VOC_PATH = 'twitter-sentiment-dataset/vocab.csv'
 VOC_INV_PATH = 'twitter-sentiment-dataset/vocab_inv.csv'
 ALL_PATH = '../final_txt.json'
 
+
 def clean_str(string):
     """
     Tokenizes common abbreviations and punctuation, removes unwanted characters. 
@@ -146,9 +147,8 @@ def string_to_int(sentence, vocabulary, max_len):
     x_text = [s.split(" ") for s in x_text]
     padded_x_text = pad_sentences_to(x_text, max_len)
     x = np.array([[vocabulary[word] for word in sentence]
-                      for sentence in padded_x_text])
+                  for sentence in padded_x_text])
     return x
-
 
 
 def load_data(dataset_fraction):
@@ -176,7 +176,7 @@ def batch_iter(data, batch_size, num_epochs):
     """
     data = np.array(data)
     data_size = len(data)
-    num_batches_per_epoch = int(len(data)/batch_size) + 1
+    num_batches_per_epoch = int(len(data) / batch_size) + 1
     for epoch in range(num_epochs):
         # Shuffle the data at each epoch
         shuffle_indices = np.random.permutation(np.arange(data_size))
