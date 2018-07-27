@@ -202,12 +202,11 @@ with tf.device(device):
                                           -1.0, 1.0),
                         name='embedding_matrix')
         embedded_chars = tf.nn.embedding_lookup(W, data_in)
-        #embedded_chars_expanded = tf.expand_dims(embedded_chars, -1)
 
     # LSTM LAYER
-    num_hidden = 256
+    num_hidden = 128
     lstm_cell = tf.contrib.rnn.LSTMCell(num_hidden, state_is_tuple=True)
-    # self.h_drop_exp = tf.expand_dims(self.h_drop,-1)
+    lstm_Cell = tf.contrib.rnn.DropoutWrapper(cell=lstm_cell, output_keep_prob=0.75)
     lstm_out, lstm_state = tf.nn.dynamic_rnn(lstm_cell, embedded_chars, dtype=tf.float32)
 
     lstm_out_expanded = tf.expand_dims(lstm_out, -1)
@@ -229,7 +228,7 @@ with tf.device(device):
                                 padding='VALID',
                                 name='conv')
             # Activation function
-            h = tf.nn.selu(tf.nn.bias_add(conv, b), name='selu')
+            h = tf.nn.relu(tf.nn.bias_add(conv, b), name='relu')
             # Maxpooling layer
             pooled = tf.nn.max_pool(h, ksize=[1, sequence_length - filter_size + 1, 1, 1], strides=[1, 1, 1, 1],
                                     padding='VALID', name="pool")
