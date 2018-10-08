@@ -1,6 +1,7 @@
 import numpy as np
 import re
 import random, csv
+import pandas as pd
 
 POS_DATASET_PATH = 'twitter-sentiment-dataset/tw-data.pos'
 NEG_DATASET_PATH = 'twitter-sentiment-dataset/tw-data.neg'
@@ -23,9 +24,9 @@ def clean_str(string):
     string = re.sub(r"\'ll", " \'ll", string)
     string = re.sub(r",", " , ", string)
     string = re.sub(r"!", " ! ", string)
-    string = re.sub(r"\(", " \( ", string)
-    string = re.sub(r"\)", " \) ", string)
-    string = re.sub(r"\?", " \? ", string)
+    string = re.sub(r"\(", r" \( ", string)
+    string = re.sub(r"\)", r" \) ", string)
+    string = re.sub(r"\?", r" \? ", string)
     string = re.sub(r"\s{2,}", " ", string)
     return string.strip().lower()
 
@@ -44,11 +45,11 @@ def load_data_and_labels(dataset_fraction):
     Returns the lists. 
     """
     print ("\tdata_helpers: loading positive examples...")
-    positive_examples = list(open(POS_DATASET_PATH).readlines())
+    positive_examples = list(open(POS_DATASET_PATH,encoding="utf-8").readlines())
     positive_examples = [s.strip() for s in positive_examples]
     print ("\tdata_helpers: [OK]")
     print ("\tdata_helpers: loading negative examples...")
-    negative_examples = list(open(NEG_DATASET_PATH).readlines())
+    negative_examples = list(open(NEG_DATASET_PATH,encoding="utf-8").readlines())
     negative_examples = [s.strip() for s in negative_examples]
     print ("\tdata_helpers: [OK]")
 
@@ -103,6 +104,21 @@ def pad_sentences_to(sentences, pad_to, padding_word="<PAD/>"):
         padded_sentences.append(new_sentence)
     return padded_sentences
 
+'''
+def build_vocab():
+    """
+    Reads the vocabulary and its inverse mapping from the csv in the dataset
+    folder.
+    Returns a list with the vocabulary and the inverse mapping.
+    """    
+    voc_inv = pd.read_csv(VOC_INV_PATH,header=None)
+    voc = pd.read_csv(VOC_PATH,header=None)
+    # Mapping from index to word
+    vocabulary_inv = [x for x in voc_inv]
+    # Mapping from word to index
+    vocabulary = {row[0]: row[1] for index, row in voc.iterrows()}
+    return [vocabulary, vocabulary_inv]
+'''
 
 def build_vocab():
     """
@@ -117,7 +133,6 @@ def build_vocab():
     # Mapping from word to index
     vocabulary = {x: i for x, i in voc}
     return [vocabulary, vocabulary_inv]
-
 
 def build_input_data(sentences, labels, vocabulary):
     """
@@ -173,10 +188,11 @@ def load_data(dataset_fraction):
 def batch_iter(data, batch_size, num_epochs):
     """
     Generates a batch iterator for a dataset.
-    """
-    data = np.array(data)
+    """    
+    print(len(data))
+    print(data.shape)
     data_size = len(data)
-    num_batches_per_epoch = int(len(data)/batch_size) + 1
+    num_batches_per_epoch = int(data_size/batch_size) + 1
     for epoch in range(num_epochs):
         # Shuffle the data at each epoch
         shuffle_indices = np.random.permutation(np.arange(data_size))

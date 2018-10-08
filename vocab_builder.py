@@ -2,7 +2,7 @@ from data_helpers import *
 import itertools
 from collections import Counter
 import csv
-
+import pandas as pd
 """
 Reads the dataset and creates two csv files: one with the vocabulary used in the dataset, and one with the vocabulary's integer mapping (sorted from most to least used).
 """
@@ -31,10 +31,14 @@ print('vocab_builder: building vocabularies...')
 vocabulary, vocabulary_inv = build_vocab(sentences_padded)
 
 print('vocab_builder: writing csv...')
-voc = csv.writer(open('twitter-sentiment-dataset/vocab.csv', 'w'))
-voc_inv = csv.writer(open('twitter-sentiment-dataset/vocab_inv.csv', 'w'))
+voc = csv.writer(open('twitter-sentiment-dataset/vocab.csv', 'w',newline=''))
+voc_inv = csv.writer(open('twitter-sentiment-dataset/vocab_inv.csv', 'w',newline=''))
 
 for key, val in vocabulary.items():
-    voc.writerow([key, val])
+        voc.writerow([key, val])
 for val in vocabulary_inv:
-    voc_inv.writerow([val])
+        voc_inv.writerow([val])
+
+
+
+

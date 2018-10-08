@@ -288,8 +288,8 @@ tf.summary.merge_all()
 # Training
 if FLAGS.train:
     # Batches
-    batches = batch_iter(zip(x_train, y_train), FLAGS.batch_size, FLAGS.epochs)
-    test_batches = list(batch_iter(zip(x_test, y_test), FLAGS.batch_size, 1))
+    batches = batch_iter(np.array([zip(x,y) for x,y in zip(x_train, y_train)]), FLAGS.batch_size, FLAGS.epochs)
+    test_batches = list(batch_iter(np.array([zip(x,y) for x,y in zip(x_test, y_test)]), FLAGS.batch_size, 1))
     my_batch = next(batches)  # To use with human_readable_output()
 
     # Pretty-printing variables
