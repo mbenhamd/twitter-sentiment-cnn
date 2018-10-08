@@ -189,9 +189,9 @@ def batch_iter(data, batch_size, num_epochs):
     """
     Generates a batch iterator for a dataset.
     """    
-    print(len(data))
-    print(data.shape)
-    data_size = len(data)
+    data = np.array(list(data))
+    #print(len(data))
+    data_size = data.shape[0]
     num_batches_per_epoch = int(data_size/batch_size) + 1
     for epoch in range(num_epochs):
         # Shuffle the data at each epoch
