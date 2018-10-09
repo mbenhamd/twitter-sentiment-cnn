@@ -170,7 +170,7 @@ else:
 
 # Log run data
 log('\nFlags:')
-for attr, value in sorted(FLAGS.__flags.values()):
+for attr, value in sorted(FLAGS.__flags.items()):
     log('\t%s = %s' % (attr, value._value))
 log('\nDataset:')
 log('\tTrain set size = %d\n'
@@ -234,7 +234,7 @@ with tf.device(device):
         pooled_outputs.append(pooled)
 
     # Combine the pooled feature tensors
-    num_filters_total = FLAGS.num_filters * len(list(filter_sizes))
+    num_filters_total = FLAGS.num_filters * len(FLAGS.filter_sizes.replace(",",""))
     h_pool = tf.concat(pooled_outputs, 3)
     h_pool_flat = tf.reshape(h_pool, [-1, num_filters_total])
 
